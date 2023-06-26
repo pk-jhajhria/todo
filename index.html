@@ -12,22 +12,138 @@
       crossorigin="anonymous"
     />
   </head>
+  <style>
+    section {
+      background-color: blueviolet;
+      min-height: 100vh;
+    }
+    .inputclass {
+      background-color: black;
+      color: white;
+      padding: 10px;
+      border: 2px solid white;
+      outline: none;
+      width: 75%;
+      margin-left: 20px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+    ul {
+      padding-left: 0;
+      text-align: end;
+      width: 75%;
+    }
+    .addbtn {
+      background-color: black;
+      color: white;
+      padding: 10px;
+      border: 2px solid white;
+      outline: none;
+      width: 10%;
+      margin-left: 10px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      transition: all 300ms ease-in-out;
+    }
+    .addbtn:hover {
+      background-color: white;
+      color: black;
+      border: 2px solid black;
+      transition: all 300ms ease-in-out;
+    }
+    ul div#parent {
+      background: #000;
+      color: #fff;
+      padding: 12px;
+      text-align: start;
+      margin: 20px;
+      width: 100%;
+      display: flex;
+      padding: 20px;
+    }
+
+    #remove {
+      background-color: #000;
+      color: white;
+      padding: 10px;
+      outline: none;
+      border: 2px solid white;
+      /* transform: translateY(75px); */
+    }
+    #edit {
+      background-color: #000;
+      color: white;
+      padding: 10px;
+      outline: none;
+      border: 2px solid white;
+      /* transform: translate(0px, -75.5px); */
+    }
+    #remove:hover {
+      background-color: #fff;
+      color: #000;
+      padding: 10px;
+      outline: none;
+      border: 2px solid white;
+    }
+    .border_color {
+      border: 2px solid red;
+    }
+  </style>
   <body>
     <section>
-      <div class="container">
-        <div id="first">
-          <input type="text" placeholder="write here" />
-          <button type="button" value="button" id="add">Button</button>
-        </div>
-        <div id="print"></div>
+      <div>
+        <input type="text" id="mainid" class="inputclass" />
+        <button class="addbtn" onclick="crateNew()">Add</button>
       </div>
+      <ul id="itemlist" style="padding: 0"></ul>
     </section>
     <script>
-      document.querySelector("#add").onclick = function () {
-        if (document.querySelector("#first input").value.length == 0) {
+      const crateNew = () => {
+        const inputclass = document.getElementById("mainid");
+        const list = document.getElementById("itemlist");
+        if (inputclass.value) {
+          let textData = inputclass.value;
+          inputclass.value = "";
+          let newDiv = document.createElement("div");
+          newDiv.id = "parent";
+          newDiv.innerHTML = `${textData}`;
+
+          let removebtn = document.createElement("button");
+          removebtn.id = "remove";
+          removebtn.innerText = "Remove";
+          list.appendChild(newDiv);
+          list.appendChild(removebtn);
+
+          let Savebtn = document.createElement("button");
+          Savebtn.id = "remove";
+          Savebtn.innerText = "Save";
+          list.appendChild(newDiv);
+          list.appendChild(Savebtn);
+          Savebtn.addEventListener("click", function () {
+            newDiv.contentEditable = "false";
+          });
+          let editbtn = document.createElement("button");
+          editbtn.id = "edit";
+          editbtn.innerText = "edit";
+          list.appendChild(newDiv);
+          list.appendChild(editbtn);
+          editbtn.addEventListener("click", function () {
+            newDiv.contentEditable = "true";
+          });
+
+          // remove btn
+
+          removebtn.addEventListener("click", function () {
+            list.removeChild(newDiv);
+            list.removeChild(removebtn);
+            list.removeChild(Savebtn);
+            list.removeChild(editbtn);
+          });
+          let bordermy = document.getElementById("mainid").classList;
+          bordermy.remove("border_color");
         } else {
-          document.querySelector("#print").innerHTML +=
-            document.querySelector("#first input").value + `<br/>`;
+          let bordermy = document.getElementById("mainid").classList;
+          bordermy.add("border_color");
         }
       };
     </script>
